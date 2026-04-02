@@ -752,6 +752,16 @@ static int eqos_start_clks_rk(struct udevice *dev)
 	int tx_delay, rx_delay, ret;
 
 	if (dm_gpio_is_valid(&eqos->phy_reset_gpio)) {
+		ret = dm_gpio_set_value(&eqos->phy_reset_gpio, 0);
+		if (ret < 0)
+			return ret;
+
+		udelay(eqos->reset_delays[0]);
+
+		ret = dm_gpio_set_value(&eqos->phy_reset_gpio, 1);
+		if (ret < 0)
+			return ret;
+
 		udelay(eqos->reset_delays[1]);
 
 		ret = dm_gpio_set_value(&eqos->phy_reset_gpio, 0);

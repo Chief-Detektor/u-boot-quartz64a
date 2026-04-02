@@ -20,6 +20,16 @@
 };
 
 /*
+ * Quartz64-A shows marginal RGMII timing in U-Boot on some setups,
+ * resulting in heavy retries/timeouts during larger TFTP transfers.
+ * Use more relaxed TX/RX delay values for the bootloader path.
+ */
+&gmac1 {
+	tx_delay = <0x4f>;
+	rx_delay = <0x24>;
+};
+
+/*
  * U-Boot does not support multiple regulators using the same gpio,
  * use vcc5v0_usb20_host to fix use of USB 2.0 port
  */
